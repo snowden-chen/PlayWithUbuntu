@@ -37,7 +37,7 @@ sudo apt install build-essential
 NVM (Node Version Manager) 是一个 Bash 脚本，它允许你为每一个用户管理多个 Node.js 版本。使用 NVM，你可以随时安装或者卸载任何你想要使用或者测试的 Node.js版本。
 浏览nvm页面，并且拷贝下面的curl或者wget命令去下载和安装nvm脚本：
 
-curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.35.3/install.sh | bash
+curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.2/install.sh | bash
 不要使用 sudo 运行，因为这会为 root 用户启用nvm。
 脚本将会从 Github 克隆项目到~/.nvm文件夹：
 
