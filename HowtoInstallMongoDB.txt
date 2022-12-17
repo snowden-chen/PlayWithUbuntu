@@ -1,0 +1,97 @@
+ubuntu20.04下的mongodb安装（5.0版本）
+
+1. 首先安装依赖包
+
+sudo apt-get install libcurl4 openssl
+
+确保你没有下过monodb，如果有的话先删除
+删除命令：（第一个停止服务，第二个移除mongodb）
+ 
+service mongodb stop
+ 
+sudo apt-get remove mongodb
+
+③：导入包管理系统使用的公钥（直接复制就好了，适用于5.0版本以上的mongodb）
+
+wget -qO - https://www.mongodb.org/static/pgp/server-5.0.asc | sudo apt-key add -
+如果命令执行结果没有显示OK，则执行此命令在把上一句重新执行：sudo apt-get install gnupg
+
+④：注册mongodb源，输入以下命令
+echo "deb [ arch=amd64,arm64 ] https://repo.mongodb.org/apt/ubuntu focal/mongodb-org/5.0 multiverse" | sudo tee /etc/apt/sources.list.d/mongodb-org-5.0.list
+ 
+⑤：更新一下源
+ 命令：sudo apt-get update
+ 
+ PS ：有些人进行到这一步可能会出错，比如如下图(软件源问题)
+ 
+ 那么最好换一个源
+
+命令：sudo gedit /etc/apt/sources.list
+
+将里面的内容（全部）改为：
+#  中科大镜像源
+deb https://mirrors.ustc.edu.cn/ubuntu/ bionic main restricted universe multiverse
+deb-src https://mirrors.ustc.edu.cn/ubuntu/ bionic main restricted universe multiverse
+deb https://mirrors.ustc.edu.cn/ubuntu/ bionic-updates main restricted universe multiverse
+deb-src https://mirrors.ustc.edu.cn/ubuntu/ bionic-updates main restricted universe multiverse
+deb https://mirrors.ustc.edu.cn/ubuntu/ bionic-backports main restricted universe multiverse
+deb-src https://mirrors.ustc.edu.cn/ubuntu/ bionic-backports main restricted universe multiverse
+deb https://mirrors.ustc.edu.cn/ubuntu/ bionic-security main restricted universe multiverse
+deb-src https://mirrors.ustc.edu.cn/ubuntu/ bionic-security main restricted universe multiverse
+deb https://mirrors.ustc.edu.cn/ubuntu/ bionic-proposed main restricted universe multiverse
+deb-src https://mirrors.ustc.edu.cn/ubuntu/ bionic-proposed main restricted universe multiverse
+
+然后在命令控制台输入：sudo apt-get update && sudo apt-get upgrade
+
+进行源的更新和升级
+
+当然还有很多其他的源，但我个人更喜欢中科大源，毕竟中科大的源重来没出过问题
+
+⑥：开始安装mongodb
+
+输入命令：sudo apt-get install -y mongodb-org=5.0.6 mongodb-org-server=5.0.6 mongodb-org-shell=5.0.6 mongodb-org-mongos=5.0.6 mongodb-org-tools=5.0.6
+这段命令直接指定了下载的是5.0.6版本，如果需要别的5.0.x的版本改一下版本就可以，命令主体是不变的
+
+⑦：创建数据存储目录
+
+输入命令：sudo mkdir -p /data/db
+
+⑧：修改配置，开放27017端口（如果开放了就没事，没开放去掉注解开放就行）
+
+输入命令：sudo vim /etc/mongod.conf
+
+⑨：启动和关闭MongoDB
+ 
+ 首先重新加载配置，并启动mongodb
+ 
+ 输入命令：
+ 
+sudo systemctl daemon-reload
+ 
+sudo systemctl start mongod
+
+查看一下运行状态
+
+输入命令：sudo systemctl status mongod 
+
+如下图，没问题 
+出现上面的页面就已经是安装好了，现在让他停下来
+
+输入命令：sudo systemctl stop mongod
+ 
+如果要重启mongodb的话输入命令：sudo systemctl restart mongod
+
+接下来开始进入MongoDB的shell命令模式：
+
+首先你需要输入命令：sudo service mongod start
+输入命令：mongo 
+
+进入shell交互页面
+
+启动mongodb才可以进入MongoDB的shell命令模式
+
+默认连接的数据库是test数据库，在此之前一定要确保你已经启动了MongoDB，否则会出现错误，启动之后运行成功，如下截图：
+
+下面就可以自由操作了，想知道一些操作的话可以输入命令：db.help()
+
+
