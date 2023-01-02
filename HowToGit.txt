@@ -5,3 +5,11 @@
 增加文件： git add .
 增加commit : git commit -m "xxx"
 提交： git push
+切换目录版本：git reset --hard b63f947  （如 某个目录 2.0.6的commits 为 ：b63f947）
+克隆目录后，更新子模块：
+如：
+git clone -b v4.4.2 --recursive https://github.com/espressif/esp-idf.git
+git submodule update --init --recursive
+如：
+git clone --recursive https://github.com/espressif/arduino-esp32.git
+git submodule update --init --recursive
