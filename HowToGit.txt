@@ -1,0 +1,7 @@
+查看当前分支的commit id : git rev-parse HEAD
+查看当前提交的详细信息 : git show
+查看当前目录git仓库的最后一次提交 ： git log
+查看状态 ： git status
+增加文件： git add .
+增加commit : git commit -m "xxx"
+提交： git push
